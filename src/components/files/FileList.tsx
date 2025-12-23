@@ -3,11 +3,11 @@
 import { ArrowDown, ArrowUp, Download, Grid3X3, List, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
-import { FileItem } from '@/src/components/files/FileItem';
-import { Button } from '@/src/components/ui/Button';
-import { Input } from '@/src/components/ui/Input';
-import { Select } from '@/src/components/ui/Select';
-import type { PdfUploadItem } from '@/src/types/files';
+import { FileItem } from '@/components/files/FileItem';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import type { PdfUploadItem } from '@/types/files';
 
 type WaitPeriod = {
   remainingMs: number;

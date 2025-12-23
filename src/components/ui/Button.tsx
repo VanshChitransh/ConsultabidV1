@@ -2,7 +2,7 @@
 
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-import { cn } from '@/src/lib/cn';
+import { cn } from '@/lib/cn';
 
 type ButtonVariant = 'default' | 'outline' | 'ghost' | 'destructive';
 type ButtonSize = 'sm' | 'md';

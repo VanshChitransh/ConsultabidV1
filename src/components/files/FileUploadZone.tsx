@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react';
 import { FolderOpen, Lock, Shield, Upload, Zap } from 'lucide-react';
 
-import { Button } from '@/src/components/ui/Button';
+import { Button } from '@/components/ui/Button';
 
 type FileUploadZoneProps = {
   onFilesUpload: (files: File[]) => void;

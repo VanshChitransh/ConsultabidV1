@@ -2,8 +2,8 @@
 
 import { CheckCircle2, Clock, Download, Eye, FileText, Loader2, Trash2 } from 'lucide-react';
 
-import { Button } from '@/src/components/ui/Button';
-import type { PdfUploadItem } from '@/src/types/files';
+import { Button } from '@/components/ui/Button';
+import type { PdfUploadItem } from '@/types/files';
 
 type WaitPeriod = {
   remainingMs: number;
