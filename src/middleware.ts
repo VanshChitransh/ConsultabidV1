@@ -6,7 +6,8 @@ import { adminEmails, developerEmails, env } from '@/src/lib/env';
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
-const isProcessingRoute = (pathname: string) => pathname.includes('/process-estimate');
+const isProcessingRoute = (pathname: string) =>
+  pathname.includes('/process-estimate') || pathname.includes('/process');
 
 const isAdminOrDeveloper = (email?: string | null) => {
   if (!email) {

@@ -15,13 +15,19 @@ const mapUpload = (upload: {
   mimeType: string;
   uploadedAt: Date;
   pageCount: number | null;
-  estimate: { id: string } | null;
+  estimate: { id: string; status: string } | null;
 }): PdfUploadItem => ({
   id: upload.id,
   name: upload.fileName,
   size: upload.fileSize,
   uploadDate: upload.uploadedAt.toISOString(),
-  status: 'completed',
+  status: upload.estimate?.status === 'processing'
+    ? 'processing'
+    : upload.estimate?.status === 'failed'
+      ? 'failed'
+      : upload.estimate
+        ? 'completed'
+        : 'pending',
   fileUrl: upload.fileUrl,
   mimeType: upload.mimeType,
   pages: upload.pageCount,
@@ -45,7 +51,7 @@ export const GET = async () => {
       orderBy: { uploadedAt: 'desc' },
       include: {
         estimate: {
-          select: { id: true },
+          select: { id: true, status: true },
         },
       },
     });

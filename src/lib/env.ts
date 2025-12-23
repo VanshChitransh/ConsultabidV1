@@ -10,6 +10,8 @@ const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1, 'GOOGLE_CLIENT_SECRET is required'),
   EMAIL_SERVER: z.string().min(1, 'EMAIL_SERVER is required'),
   EMAIL_FROM: z.string().min(1, 'EMAIL_FROM is required'),
+  AI_ENGINE_URL: z.string().url(),
+  AI_ENGINE_MOCK: z.string().optional().default('false'),
   ADMIN_EMAILS: z.string().optional().default(''),
   DEVELOPER_EMAILS: z.string().optional().default(''),
   R2_ACCOUNT_ID: z.string().min(1, 'R2_ACCOUNT_ID is required'),

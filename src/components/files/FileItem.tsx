@@ -76,6 +76,7 @@ export const FileItem = ({
   onEstimate,
   waitPeriod,
 }: FileItemProps) => {
+  const isCompleted = file.status === 'completed';
   const waitLabel = waitPeriod ? formatRemaining(waitPeriod.remainingMs) : null;
   const statusBadge = (
     <div className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs ${statusStyles[file.status]}`}>
@@ -117,7 +118,13 @@ export const FileItem = ({
         <p className="mt-3 text-xs text-muted-foreground">Uploaded {formatDate(file.uploadDate)}</p>
 
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <Button size="sm" variant="outline" icon={<Eye className="h-4 w-4" />} onClick={onView}>
+          <Button
+            size="sm"
+            variant="outline"
+            icon={<Eye className="h-4 w-4" />}
+            onClick={onView}
+            disabled={!isCompleted}
+          >
             View
           </Button>
           <Button
@@ -125,6 +132,7 @@ export const FileItem = ({
             variant="outline"
             icon={<Download className="h-4 w-4" />}
             onClick={onDownload}
+            disabled={!isCompleted}
           />
           <Button
             size="sm"
@@ -138,7 +146,7 @@ export const FileItem = ({
               variant="default"
               icon={<FileText className="h-4 w-4" />}
               onClick={onEstimate}
-              disabled={!!waitPeriod}
+              disabled={!!waitPeriod || file.status === 'processing'}
             >
               Estimate
             </Button>
@@ -179,12 +187,19 @@ export const FileItem = ({
         <div className="text-center text-xs text-muted-foreground">{formatFileSize(file.size)}</div>
         <div className="text-center text-xs text-muted-foreground">{formatDate(file.uploadDate)}</div>
         <div className="flex items-center justify-center gap-1">
-          <Button size="sm" variant="ghost" icon={<Eye className="h-4 w-4" />} onClick={onView} />
+          <Button
+            size="sm"
+            variant="ghost"
+            icon={<Eye className="h-4 w-4" />}
+            onClick={onView}
+            disabled={!isCompleted}
+          />
           <Button
             size="sm"
             variant="ghost"
             icon={<Download className="h-4 w-4" />}
             onClick={onDownload}
+            disabled={!isCompleted}
           />
           <Button size="sm" variant="ghost" icon={<Trash2 className="h-4 w-4" />} onClick={onDelete} />
         </div>

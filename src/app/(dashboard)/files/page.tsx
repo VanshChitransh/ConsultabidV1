@@ -89,6 +89,44 @@ export default function FilesPage() {
       .forEach((file) => window.open(file.fileUrl, '_blank', 'noopener,noreferrer'));
   }, [files]);
 
+  const handleEstimate = useCallback(async (file: PdfUploadItem) => {
+    setError(null);
+    setFiles((prev) =>
+      prev.map((item) =>
+        item.id === file.id ? { ...item, status: 'processing' } : item
+      )
+    );
+
+    try {
+      const response = await fetch(`/api/files/${file.id}/process`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      const payload = (await response.json()) as ApiResponse<{
+        estimateId: string;
+        upload: PdfUploadItem;
+      }>;
+
+      if (!response.ok || !payload.success || !payload.data) {
+        throw new Error(payload.error || 'Estimate processing failed');
+      }
+
+      setFiles((prev) =>
+        prev.map((item) =>
+          item.id === file.id ? payload.data.upload : item
+        )
+      );
+    } catch (err) {
+      setFiles((prev) =>
+        prev.map((item) =>
+          item.id === file.id ? { ...item, status: 'failed' } : item
+        )
+      );
+      setError(err instanceof Error ? err.message : 'Estimate processing failed');
+    }
+  }, []);
+
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 p-6">
       <header className="space-y-2">
@@ -109,6 +147,7 @@ export default function FilesPage() {
         onFileDownload={handleFileDownload}
         onBulkDelete={handleBulkDelete}
         onBulkDownload={handleBulkDownload}
+        onEstimate={handleEstimate}
       />
     </div>
   );
